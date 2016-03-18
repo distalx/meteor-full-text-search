@@ -1,10 +1,33 @@
+Artists = new Mongo.Collection("artists");
+Arts = new Mongo.Collection("arts");
+
 if (Meteor.isClient) {
-  // counter starts at 0
+
 
 }
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    // code to run on server at startup
-  });
+
+    if (Artists.find().fetch().length === 0) {
+      console.log("Dummy Data is being added");
+
+      for (var i = 0; i < 20; i++) {
+        var artist = Fake.user({
+          fields: ['name', 'username', 'emails.address', 'profile.name'],
+        });
+        Artists.insert(artist);
+      }
+
+    }//Artists
+
+    if (Arts.find().fetch().length === 0) {
+      for (var i = 0; i < 20; i++) {
+        Arts.insert({title:Fake.word()});
+      }
+    }//Arts
+
+  });//startup function
+
+  
 }
