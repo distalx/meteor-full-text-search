@@ -15,8 +15,18 @@
 <template name="search">
   <form>
     <div class="form-group">
-      <label >Search</label>
-      <input type="text" class="form-control" placeholder="Name, Number, Email, Random Words">
+      <label >Enter a search term</label>
+      <input type="text" class="form-control searchTerm" placeholder="Name, Number, Email, Random Words" id="foo" name="searchText">
+    </div>
+
+    <div class="row">
+      {{#if searchResults.count}}
+        <ul>
+        {{#each searchResults}}
+          <li>{{name}}</li>
+        {{/each}}
+        </ul>
+      {{/if}}
     </div>
   </form>
 
