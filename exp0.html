@@ -4,30 +4,50 @@
 
 <body>
 
-<div class="container">
 
-  {{> search}}
 
-</div>
+
+
 
 </body>
+
+
+<template name="layout">
+  <div class="container">
+    {{>Template.dynamic template=content}}
+  </div>
+</template>
+<template name="home">
+  {{> search}}
+</template>
 
 <template name="search">
   <form>
     <div class="form-group">
       <label >Enter a search term</label>
-      <input type="text" class="form-control searchTerm" placeholder="Name, Number, Email, Random Words" id="foo" name="searchText">
+      <input type="text" class="form-control searchTerm" placeholder="Name" id="foo" name="searchText">
     </div>
 
     <div class="row">
       {{#if searchResults.count}}
         <ul>
         {{#each searchResults}}
-          <li> <a href="{{_id}}"> {{name}} </a></li>
+          <li> <a href="artist/{{_id}}"> {{name}} </a></li>
         {{/each}}
         </ul>
       {{/if}}
     </div>
   </form>
 
+</template>
+
+<template name="artistInfo">
+  <a href="/"><div class="btn btn-default">Back</div></a>
+
+  {{#each artist}}
+  <div class="page-header">
+    <h4>{{profile.name}}</h4>
+  </div>
+  <p>email : {{username}}</p>
+  {{/each}}
 </template>

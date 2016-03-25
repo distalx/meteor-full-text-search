@@ -1,5 +1,4 @@
 Artists = new Mongo.Collection("artists");
-Arts = new Mongo.Collection("arts");
 
 RegExp.escape = function(s) {
   return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -19,7 +18,6 @@ if (Meteor.isClient) {
 
 
 Tracker.autorun(function() {
-
   if (Session.get('artistSearchQuery'))
     Meteor.subscribe('artistSearch', Session.get('artistSearchQuery'));
 });
@@ -45,18 +43,29 @@ Template.search.events({
 });
 
 
+Template.artistInfo.helpers({
+  artist:function(){
+    var artistId = FlowRouter.current().params.id;
+    return Artists.find({"_id":artistId});
+
+  }
+
+});
+
+
+
 
 }//client
 
 if (Meteor.isServer) {
 
-  Meteor.publish("artistSearch", function(query) {
-    check(query, String);
+  Meteor.publish("artistSearch", function(term) {
+    check(term, String);
 
-    if (_.isEmpty(query))
+    if (_.isEmpty(term))
       return this.ready();
 
-    return Artists.search(query);
+    return Artists.search(term);
   });
 
         //result =  Artists.find({$or: [ { name:term }, { username:term},{ $elemMatch: { profile: term } } ]}).fetch();
@@ -75,12 +84,23 @@ if (Meteor.isServer) {
 
     }//Artists
 
-    if (Arts.find().fetch().length === 0) {
-      for (var i = 0; i < 20; i++) {
-        Arts.insert({title:Fake.word()});
-      }
-    }//Arts
 
   });//startup function
-
 }
+
+
+/////////
+//routes
+////////
+
+FlowRouter.route('/', {
+  action: function() {
+    BlazeLayout.render("layout", {content: "home"});
+  }
+});
+
+FlowRouter.route('/artist/:id', {
+  action: function(params) {
+    BlazeLayout.render("layout", {content: "artistInfo"});
+  }
+});
