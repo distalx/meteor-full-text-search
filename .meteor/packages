@@ -21,3 +21,5 @@ twbs:bootstrap
 anti:fake
 check
 peerlibrary:util
+kadira:flow-router
+kadira:blaze-layout
