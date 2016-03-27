@@ -7,8 +7,10 @@ RegExp.escape = function(s) {
 
 Artists.search = function(query) {
   return Artists.find({
-    name: { $regex: RegExp.escape(query), $options: 'i' }
-  }, {
+    $or :[
+    {name: { $regex: RegExp.escape(query), $options: 'i' }},
+    {location: { $regex: RegExp.escape(query), $options: 'i' }}
+   ]}, {
     limit: 20
   });
 };
@@ -79,7 +81,7 @@ if (Meteor.isServer) {
         var artist = Fake.user({
           fields: ['name', 'username', 'emails.address', 'profile.name'],
         });
-        artist.location = fake.fromArray(['Spain', 'France', 'Germany', 'Amsterdam', 'Jordaan','Venice','Italy']);
+        artist.location = Fake.fromArray(['Spain', 'France', 'Germany', 'Amsterdam', 'Jordaan','Venice','Italy']);
         Artists.insert(artist);
       }
 
