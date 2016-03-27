@@ -79,6 +79,7 @@ if (Meteor.isServer) {
         var artist = Fake.user({
           fields: ['name', 'username', 'emails.address', 'profile.name'],
         });
+        artist.location = fake.fromArray(['Spain', 'France', 'Germany', 'Amsterdam', 'Jordaan','Venice','Italy']);
         Artists.insert(artist);
       }
 
