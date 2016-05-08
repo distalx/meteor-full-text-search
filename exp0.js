@@ -70,7 +70,6 @@ if (Meteor.isServer) {
     return Artists.search(term);
   });
 
-        //result =  Artists.find({$or: [ { name:term }, { username:term},{ $elemMatch: { profile: term } } ]}).fetch();
 
   Meteor.startup(function () {
 

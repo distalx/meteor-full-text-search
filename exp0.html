@@ -1,14 +1,9 @@
 <head>
-  <title>exp0</title>
+  <title>full-text search</title>
 </head>
 
 <body>
-
-
-
-
-
-
+<h4>Full text search</h4>
 </body>
 
 
@@ -25,16 +20,28 @@
   <form>
     <div class="form-group">
       <label >Enter a search term</label>
-      <input type="text" class="form-control searchTerm" placeholder="Name" id="foo" name="searchText">
+      <input type="text" class="form-control searchTerm" placeholder="Name or Location" id="foo" name="searchText">
     </div>
 
     <div class="row">
       {{#if searchResults.count}}
-        <ul>
-        {{#each searchResults}}
-          <li> <a href="artist/{{_id}}"> {{name}} </a></li>
-        {{/each}}
-        </ul>
+        <div class="col-md-2">
+          <h6>Name</h6>
+          <ul>
+          {{#each searchResults}}
+            <li> <a href="artist/{{_id}}"> {{name}} </a></li>
+          {{/each}}
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <h6>Location</h6>
+          <ul>
+          {{#each searchResults}}
+            <li> <a href="artist/{{_id}}"> {{location}} </a></li>
+          {{/each}}
+          </ul>
+        </div>
+
       {{/if}}
     </div>
   </form>
